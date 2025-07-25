@@ -2,6 +2,11 @@
 Changelog for package inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.1 (2025-07-25)
+------------------
+* [REF] Remove unnecessary specification of rosbag2 reader plugin, uses default
+* Contributors: Vincenzo Petrone
+
 1.0.0 (2025-04-13)
 ------------------
 * [FIX] Update missing dependencies in demo to include plugins to read bag files with sqlite3
