@@ -1,52 +1,55 @@
-# inverse_dynamics_solver
+# Inverse dynamics solver
 
-This package provides a superclass for a generic inverse dynamics solver.
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-red.svg?style=plastic)](https://opensource.org/licenses/BSD-3-Clause)
+[![Build Status](https://build.ros2.org/buildStatus/icon?job=Hdev__inverse_dynamics_solver__ubuntu_jammy_amd64&style=plastic)](https://build.ros2.org/job/Hdev__inverse_dynamics_solver__ubuntu_jammy_amd64/)
+[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
 
-!["Inverse dynamics solver block scheme"](./doc/media/inverse_dynamics_solver.png "Inverse dynamics solver block scheme")
+This is the accompanying code of the paper
 
-Given a dynamic model in the form `H(q) * ddq + C(q,dq) * dq + f(dq) + g(q) = tau`, this library can return the following values:
+> V. Petrone, E. Ferrentino, P. Chiacchio, "A ROS2-based software library for inverse dynamics computation". Under peer-review.
 
-* **getInertiaMatrix(q)** returns the inertia matrix `H(q)`, as a function of joint positions `q`;
-* **getCoriolisVector(q)** returns the Coriolis and centrifugal effects vector `C(q,dq) * dq`, as a function of joint positions `q` and velocities `dq`;
-* **getGravityVector(q)** returns the gravity vector `g(q)`, as a function of joint positions `q`;
-* **getFrictionVector(dq)** returns the possibly nonlinear friction vector `f(dq)`, as a function of joint velocities `dq`;
-* **getDynamicParameters(q, dq)** returns the tuple (`H(q)`, `C(q,dq)`, `g(q)`);
-* **getTorques(q, dq, ddq)** returns `H(q) * ddq + C(q,dq) * dq + g(q)`.
+This repository provides a library to solve the inverse dynamics problem for serial manipulators, i.e., it returns torques or dynamic matrices given input joint positions, velocities and accelerations.
 
-Please check the [InverseDynamicsSolver](./include/inverse_dynamics_solver/inverse_dynamics_solver.hpp) class for more information.
+The library is implemented in the [`inverse_dynamics_solver` package](./inverse_dynamics_solver/README.md).
+The library is inherited by three concrete classes, i.e.,
 
-## Usage
+- A KDL-based solver for simulated robots, based on their robot description defined via Unified Robot Description Format (URDF)
+    - You can find it in the [`kdl_inverse_dynamics_solver` package](./kdl_inverse_dynamics_solver/README.md)
+- A solver for the real UR10 robot
+    - You can find it in the [`ur10_inverse_dynamics_solver` package](./ur10_inverse_dynamics_solver/README.md)
+- A solver for the real Franka Emika Robot (FER, aka Panda)
+    - You can find it in the [`franka_inria_inverse_dynamics_solver` package](./franka_inria_inverse_dynamics_solver/README.md)
 
-The solver must be initialized before usage, via the [`initialize()`](./include/inverse_dynamics_solver/inverse_dynamics_solver.hpp#L0047) method.
-This method accepts a `NodeParametersInterface` through which the [configuration parameters](#configuration) must be passed under the correct namespace, together with the `robot_description` (in string format) the dynamics shall be solved for.
-Please refer to the method documentation for more information.
+## Dependencies
 
-## Configuration
+This code requires the installation of Ubuntu 22.04 and [ROS2 Humble Hawksbill](https://docs.ros.org/en/humble/index.html).
 
-The solver can be (optionally) configured with parameters, to pass via the node parameters interface.
-The necessity and effectiveness of these parameters depend on the specific implementation.
-For the time being, only the [KDL based solver](../kdl_inverse_dynamics_solver/include/kdl_inverse_dynamics_solver/kdl_inverse_dynamics_solver.hpp) is affected by this configuration.
-Thus, please refer to [the related documentation](../kdl_inverse_dynamics_solver/README.md#configuration) for an example on how these parameters are configured.
+### System dependencies
 
-## Demo
-
-Demos and tests are available with concrete implementations of this library: please check [InverseDynamicsSolverKDL](../kdl_inverse_dynamics_solver/README.md#demo), [InverseDynamicsSolverUR10](../ur10_inverse_dynamics_solver/README.md#demo) or [InverseDynamicsSolverFrankaInria](../franka_inria_inverse_dynamics_solver/README.md#demo).
-
-### Evaluate the solver
-
-You can evaluate the solver computing the torques corresponding to a sequence of `sensor_msgs/msg/JointState` messages by launching the [`evaluate_solver`](./launch/evaluate_solver.launch.py) demo.
-Please refer to the launch files in [`kdl_inverse_dynamics_solver`](../kdl_inverse_dynamics_solver/README.md#demo) (available for both the [UR10](../kdl_inverse_dynamics_solver/launch/evaluate_solver_kdl_ur10.launch.py) and [Franka Emika Panda (FER)](../kdl_inverse_dynamics_solver/launch/evaluate_solver_kdl_panda.launch.py) robots), [`ur10_inverse_dynamics_solver`](../ur10_inverse_dynamics_solver/launch/evaluate_solver_ur10.launch.py) or [`franka_inria_inverse_dynamics_solver`](../franka_inria_inverse_dynamics_solver/launch/evaluate_solver_franka.launch.py) to see how this demo can be configured with different plugins.
-
-#### Visualize the results
-
-Run the [plot_joint_state](./scripts/plot_joint_state.py) Python script to assess the performance of the solver, i.e. the comparison between ground truth (GT) and computed torques, where the GT torques are retrieved from the measured joint states, as mentioned above:
+To install the packages needed by this repo as system-wide dependencies, run the following command from the repository's root folder:
 
 ```bash
-ros2 run inverse_dynamics_solver plot_joint_state.py -b BAG_FILES [BAG_FILES ...] -o OUTPUT_DIR
+rosdep install --from-paths . -i
 ```
 
-For additional information, run
+### Python dependencies
+
+To install all Python dependencies, run the following commands from the repository's root folder:
 
 ```bash
-ros2 run inverse_dynamics_solver plot_joint_state.py -h
+sudo apt install python3-venv -y
+python3 -m venv venv --system-site-packages
+source venv/bin/activate
+pip install -r requirements.txt
 ```
+
+The dependencies are installed in the virtual environment called [`venv`](./venv/): to deactivate it, simply run `deactivate` in your terminal.
+
+## Reproducible results
+
+[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
+
+Our results are reproducible via the demos provided in the packages above, or by running the CodeOcean capsule: the latter option does not require installing any dependency on your computer.
+The capsule is reachable at [https://doi.org/10.24433/CO.2265930.v1](https://doi.org/10.24433/CO.2265930.v1).
+
+&copy; *2025 Automatic Control Group (DIEM, University of Salerno)*
