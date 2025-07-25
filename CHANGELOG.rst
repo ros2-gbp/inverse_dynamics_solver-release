@@ -2,6 +2,9 @@
 Changelog for package kdl_inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.1 (2025-07-25)
+------------------
+
 1.0.0 (2025-04-13)
 ------------------
 * [REF] Rename .h files to .hpp files
