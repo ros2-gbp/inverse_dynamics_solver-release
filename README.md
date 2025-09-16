@@ -1,170 +1,55 @@
-# kdl_inverse_dynamics_solver
+# Inverse dynamics solver
 
-## Contents
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-red.svg?style=plastic)](https://opensource.org/licenses/BSD-3-Clause)
+[![Build Status](https://build.ros2.org/buildStatus/icon?job=Hdev__inverse_dynamics_solver__ubuntu_jammy_amd64&style=plastic)](https://build.ros2.org/job/Hdev__inverse_dynamics_solver__ubuntu_jammy_amd64/)
+[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
 
-This is an implementation of [`InverseDynamicsSolver`](../inverse_dynamics_solver/README.md) using the general-purpose KDL dynamics solver based on [pluginlib](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Pluginlib.html).
+This is the accompanying code of the paper
 
-It uses the [KDL parser](https://github.com/ros/kdl_parser/tree/humble) to read a robot description from a parameter spawned by [xacro](https://github.com/ros/xacro/tree/ros2).
-So, in order to use this library, this parameter must be passed via launch files.
-Please refer to the [test section](#how-to-test), specifically to the [test launch file](./test/test_kdl_inverse_dynamics_solver.py), for an example, and to [the official guide](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html) to know how to pass parameters.
+> V. Petrone, E. Ferrentino, P. Chiacchio, "A ROS2-based software library for inverse dynamics computation". Under peer-review.
 
-## How to build
+This repository provides a library to solve the inverse dynamics problem for serial manipulators, i.e., it returns torques or dynamic matrices given input joint positions, velocities and accelerations.
 
-To build this package, run the following instruction from the root of your colcon workspace:
+The library is implemented in the [`inverse_dynamics_solver` package](./inverse_dynamics_solver/README.md).
+The library is inherited by three concrete classes, i.e.,
 
-```bash
-colcon build --packages-up-to kdl_inverse_dynamics_solver
-source install/setup.bash
-```
+- A KDL-based solver for simulated robots, based on their robot description defined via Unified Robot Description Format (URDF)
+    - You can find it in the [`kdl_inverse_dynamics_solver` package](./kdl_inverse_dynamics_solver/README.md)
+- A solver for the real UR10 robot
+    - You can find it in the [`ur10_inverse_dynamics_solver` package](./ur10_inverse_dynamics_solver/README.md)
+- A solver for the real Franka Emika Robot (FER, aka Panda)
+    - You can find it in the [`franka_inria_inverse_dynamics_solver` package](./franka_inria_inverse_dynamics_solver/README.md)
 
-## Demo
+## Dependencies
 
-You can evaluate the solver using the [demo](../inverse_dynamics_solver/demo/evaluate_solver.cpp), currently configured in two launch files for the [Panda](./launch/evaluate_solver_kdl_panda.launch.py) and [UR10](./launch/evaluate_solver_kdl_ur10.launch.py) robots.
-The demo reads a bag file containing a sequence of `sensor_msgs/msg/JointState` messages and, for each state, computes the corresponding torques according to the `InverseDynamicsSolverKDL` solver, which are saved in another bag file.
+This code requires the installation of Ubuntu 22.04 and [ROS2 Humble Hawksbill](https://docs.ros.org/en/humble/index.html).
 
-### Run the demos
+### System dependencies
 
-#### Panda
-
-To launch the Panda demo, run the following:
-
-```bash
-ros2 launch kdl_inverse_dynamics_solver evaluate_solver_kdl_panda.launch.py
-```
-
-By default, the demo reads the [`panda_exciting_trajectory.db3`](./bagfiles/panda_exciting_trajectory.db3) bag file, and produces the output under the `panda_exciting_trajectory_torques` folder (created under the current working directory), with the computed torques written on the `/torques` topic.
-You can change this configuration with
+To install the packages needed by this repo as system-wide dependencies, run the following command from the repository's root folder:
 
 ```bash
-ros2 launch kdl_inverse_dynamics_solver evaluate_solver_kdl_panda.launch.py input_bag:=<my_bag_file> output_bag:=<my_output_folder> topic:=<my_output_topic>
+rosdep install --from-paths . -i
 ```
 
-#### UR10
+### Python dependencies
 
-To launch the UR10 demo, run the following:
+To install all Python dependencies, run the following commands from the repository's root folder:
 
 ```bash
-ros2 launch kdl_inverse_dynamics_solver evaluate_solver_kdl_ur10.launch.py
+sudo apt install python3-venv -y
+python3 -m venv venv --system-site-packages
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-By default, the demo reads the [`ur10_exciting_trajectory.db3`](./bagfiles/ur10_exciting_trajectory.db3) bag file, and produces the output under the `ur10_exciting_trajectory_torques` folder (created under the current working directory), with the computed torques written on the `/torques` topic.
-You can change this configuration with
+The dependencies are installed in the virtual environment called [`venv`](./venv/): to deactivate it, simply run `deactivate` in your terminal.
 
-```bash
-ros2 launch kdl_inverse_dynamics_solver evaluate_solver_kdl_ur10.launch.py input_bag:=<my_bag_file> output_bag:=<my_output_folder> topic:=<my_output_topic>
-```
+## Reproducible results
 
-### Visualize the results
+[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
 
-Please refer to [the parent class documentation](../inverse_dynamics_solver/README.md#visualize-the-results) to visualize the results, i.e. the evaluation of joint torque signals on `input_bag`, stored in `output_bag`.
+Our results are reproducible via the demos provided in the packages above, or by running the CodeOcean capsule: the latter option does not require installing any dependency on your computer.
+The capsule is reachable at [https://doi.org/10.24433/CO.2265930.v1](https://doi.org/10.24433/CO.2265930.v1).
 
-## How to test
-
-This library is tested against a simulated UR10 robot.
-The kinematic description is taken from UR's official package, [ur_description](https://github.com/UniversalRobots/Universal_Robots_ROS2_Description/tree/humble).
-
-The tests consist in checking that, given a fixed joint position and velocity state, the KDL solver returns the expected values for the dynamic components.
-
-To build and execute the test, run the following:
-
-```bash
-colcon test --packages-select kdl_inverse_dynamics_solver
-```
-
-To see the results, run the following:
-
-```bash
-colcon test-result --all --verbose
-```
-
-The expected output should be the following:
-
-```text
-build/kdl_inverse_dynamics_solver/Testing/20240510-0742/Test.xml: 1 test, 0 errors, 0 failures, 0 skipped
-build/kdl_inverse_dynamics_solver/test_results/kdl_inverse_dynamics_solver/launch_test_kdl_inverse_dynamics_solver.launch.py.xunit.xml: 2 tests, 0 errors, 0 failures, 0 skipped
-
-Summary: 3 tests, 0 errors, 0 failures, 0 skipped
-```
-
-### Optional analysis
-
-If you wish to see the INFO messages printed on console during the test, run the following:
-
-```bash
-colcon test --packages-select kdl_inverse_dynamics_solver --event-handlers console_cohesion+
-```
-
-The expected output should contain the following line:
-
-```text
-100% tests passed, 0 tests failed out of 1
-```
-
-## Configuration
-
-The solver can be configured with the following parameters, to be passed via the node parameters interface:
-
-* `robot_description`: a string representing the URDF robot description;
-* `root`: the root of the kinematic chain to solve the dynamics for
-    * defaults to the first link in `robot_description`
-* `tip`: the tip of the kinematic chain to solve the dynamics for
-* `gravity`: a 3x1 vector of real numbers describing the gravity effect in `root` frame
-    * defaults to `[0, 0, -9.81]`
-
-The [test launch file](./test/test_kdl_inverse_dynamics_solver.py) provides an example on how the solver is initialized and configured.
-In the following snippet, the user is choosing the solver's `root`, `tip`, and `gravity` parameters, and is passing the URDF `robot_description` to the node initializing the solver.
-
-```python
-# Input arguments
-parameters = {
-    "robot_description": robot_description,  # String to be retrieved via xacro from the URDF
-    "inverse_dynamics_solver_plugin_name": inverse_dynamics_solver_plugin_name,  # String to be chosen by the user
-    "kdl.root": "base_link",
-    "kdl.tip": "tool0",
-    "kdl.gravity": [0, 0, -9.81],
-}
-
-# The node to test
-test_kdl_inverse_dynamics_solver_node = Node(
-    package="kdl_inverse_dynamics_solver",
-    executable="kdl_inverse_dynamics_solver_test",
-    name="test_kdl_inverse_dynamics_solver_node",
-    parameters=[parameters],
-    output="screen",
-)
-```
-
-Consequently, the [node](./test/test_kdl_inverse_dynamics_solver.cpp) retrieves the parameters...
-
-```cpp
-// Instantiate the node
-rclcpp::NodeOptions node_options;
-node_options.automatically_declare_parameters_from_overrides(true);
-node_ = rclcpp::Node::make_shared("kdl_inverse_dynamics_solver_test", node_options);
-// Get robot_description parameter
-robot_description_ = node_->get_parameter_or<std::string>("robot_description", "");
-// Load parameters
-node_->get_parameter("inverse_dynamics_solver_plugin_name", inverse_dynamics_solver_plugin_name_);
-```
-
-... loads the solver via `pluginlib`...
-
-```cpp
-// Initialize inverse dynamics solver class loader
-inverse_dynamics_solver_loader_ =
-    std::make_unique<InverseDynamicsSolverLoader>("inverse_dynamics_solver", "inverse_dynamics_solver::InverseDynamicsSolver");
-// Load KDL inverse dynamics solver plugin
-inverse_dynamics_solver_ = inverse_dynamics_solver_loader_->createUniqueInstance(inverse_dynamics_solver_plugin_name_);
-```
-
-... and initializes the solver:
-
-```cpp
-// Initialize inverse dynamics solver
-inverse_dynamics_solver_->initialize(node_->get_node_parameters_interface(), "kdl", robot_description_);  // or ...
-inverse_dynamics_solver_->initialize(node_->get_node_parameters_interface(), "kdl");
-```
-
-**Note 1:** the `kdl` namespace passed to `initialize` must be the same as the one chosen when configuring the `parameters` in the launch file.
-
-**Note 2:** passing `robot_description_` to `initialize` is not mandatory, as it is retrieved by the node parameters interface as well.
+&copy; *2025 Automatic Control Group (DIEM, University of Salerno)*
