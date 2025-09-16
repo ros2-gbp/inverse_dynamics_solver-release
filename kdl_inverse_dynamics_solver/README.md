@@ -2,11 +2,11 @@
 
 ## Contents
 
-This is an implementation of [`InverseDynamicsSolver`](../inverse_dynamics_solver/README.md) using the general-purpose KDL dynamics solver based on [pluginlib](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Pluginlib.html).
+This is an implementation of [`InverseDynamicsSolver`](../inverse_dynamics_solver/README.md) using the general-purpose KDL dynamics solver based on [pluginlib](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Pluginlib.html).
 
-It uses the [KDL parser](https://github.com/ros/kdl_parser/tree/humble) to read a robot description from a parameter spawned by [xacro](https://github.com/ros/xacro/tree/ros2).
+It uses the [KDL parser](https://github.com/ros/kdl_parser/tree/jazzy) to read a robot description from a parameter spawned by [xacro](https://github.com/ros/xacro/tree/ros2).
 So, in order to use this library, this parameter must be passed via launch files.
-Please refer to the [test section](#how-to-test), specifically to the [test launch file](./test/test_kdl_inverse_dynamics_solver.py), for an example, and to [the official guide](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html) to know how to pass parameters.
+Please refer to the [test section](#how-to-test), specifically to the [test launch file](./test/test_kdl_inverse_dynamics_solver.py), for an example, and to [the official guide](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Launch-Main.html) to know how to pass parameters.
 
 ## How to build
 
@@ -19,27 +19,10 @@ source install/setup.bash
 
 ## Demo
 
-You can evaluate the solver using the [demo](../inverse_dynamics_solver/demo/evaluate_solver.cpp), currently configured in two launch files for the [Panda](./launch/evaluate_solver_kdl_panda.launch.py) and [UR10](./launch/evaluate_solver_kdl_ur10.launch.py) robots.
+You can evaluate the solver using the [demo](../inverse_dynamics_solver/demo/evaluate_solver.cpp), currently configured in a launch file for the [UR10](./launch/evaluate_solver_kdl_ur10.launch.py) robot.
 The demo reads a bag file containing a sequence of `sensor_msgs/msg/JointState` messages and, for each state, computes the corresponding torques according to the `InverseDynamicsSolverKDL` solver, which are saved in another bag file.
 
-### Run the demos
-
-#### Panda
-
-To launch the Panda demo, run the following:
-
-```bash
-ros2 launch kdl_inverse_dynamics_solver evaluate_solver_kdl_panda.launch.py
-```
-
-By default, the demo reads the [`panda_exciting_trajectory.db3`](./bagfiles/panda_exciting_trajectory.db3) bag file, and produces the output under the `panda_exciting_trajectory_torques` folder (created under the current working directory), with the computed torques written on the `/torques` topic.
-You can change this configuration with
-
-```bash
-ros2 launch kdl_inverse_dynamics_solver evaluate_solver_kdl_panda.launch.py input_bag:=<my_bag_file> output_bag:=<my_output_folder> topic:=<my_output_topic>
-```
-
-#### UR10
+### Run the demo
 
 To launch the UR10 demo, run the following:
 
@@ -61,7 +44,7 @@ Please refer to [the parent class documentation](../inverse_dynamics_solver/READ
 ## How to test
 
 This library is tested against a simulated UR10 robot.
-The kinematic description is taken from UR's official package, [ur_description](https://github.com/UniversalRobots/Universal_Robots_ROS2_Description/tree/humble).
+The kinematic description is taken from UR's official package, [ur_description](https://github.com/UniversalRobots/Universal_Robots_ROS2_Description/tree/jazzy).
 
 The tests consist in checking that, given a fixed joint position and velocity state, the KDL solver returns the expected values for the dynamic components.
 
