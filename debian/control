@@ -1,0 +1,12 @@
+Source: ros-rolling-ur10-inverse-dynamics-solver
+Section: misc
+Priority: optional
+Maintainer: Enrico Ferrentino <eferrentino@unisa.it>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake, ros-rolling-ament-cmake-gtest <!nocheck>, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-inverse-dynamics-solver, ros-rolling-pluginlib, ros-rolling-rclcpp <!nocheck>, ros-rolling-ros-testing <!nocheck>, ros-rolling-rosbag2-cpp <!nocheck>, ros-rolling-rosbag2-storage <!nocheck>, ros-rolling-rosbag2-storage-default-plugins <!nocheck>, ros-rolling-trajectory-msgs <!nocheck>, ros-rolling-ros-workspace
+Homepage: https://github.com/unisa-acg/inverse-dynamics-solver.git
+Standards-Version: 3.9.2
+
+Package: ros-rolling-ur10-inverse-dynamics-solver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-inverse-dynamics-solver, ros-rolling-pluginlib, ros-rolling-ur-description, ros-rolling-ros-workspace
+Description: A C++ library implementing the inverse dynamics solver for the UR10 real robot.
