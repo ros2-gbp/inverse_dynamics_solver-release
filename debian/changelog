@@ -1,0 +1,48 @@
+ros-rolling-kdl-inverse-dynamics-solver (6.0.1-1noble) noble; urgency=high
+
+  * Merge pull request #11 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/11> from unisa-acg/feature/update_dependencies_exporting
+    feature/update_dependencies_exporting
+  * [REF] Reduce direct dependencies when possible
+    - [FIX] Add missing KDL dependencies
+    - [DOC] Change citation in UR10 solver
+  * [FIX] Correct eigen name in package description
+  * Merge branch 'main' into feature/update_dependencies_exporting
+  * [REF] Solve compilation warnings about deprecation of "ament_target_dependencies" in favor of "target_link_libraries"
+    - [REF] Add missing dependencies
+  * Merge pull request #10 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/10> from unisa-acg/feature/franka_description_removal
+    feature/franka_description_removal
+  * [MAK] Update CMakeLists and package.xml to include new dependencies and refactor inverse dynamic solver target export
+  * [REF] Remove Franka's demos because Franka's description is not available in Jazzy
+    - [DOC] Update documentation accordingly
+  * Merge pull request #5 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/5> from unisa-acg/humble
+    1.0.1
+  * Contributors: Davide Risi, Enrico Ferrentino, Vincenzo Petrone
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Wed, 17 Dec 2025 23:00:00 -0000
+
+ros-rolling-kdl-inverse-dynamics-solver (1.0.1-1noble) noble; urgency=high
+
+
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Thu, 24 Jul 2025 22:00:00 -0000
+
+ros-rolling-kdl-inverse-dynamics-solver (1.0.0-1noble) noble; urgency=high
+
+  * [REF] Rename .h files to .hpp files
+  * Merge pull request #2 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/2> from unisa-acg/humble
+    Set repo URL, rename test launch files, document CO reproducibility
+  * [REF] Rename launch file to change its extension and folder
+  * [MAK] Add repo URL
+  * Contributors: Enrico Ferrentino, Vincenzo Petrone
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Sat, 12 Apr 2025 22:00:00 -0000
+
+ros-rolling-kdl-inverse-dynamics-solver (0.1.1-1noble) noble; urgency=high
+
+  * [MAK] Create CHANGELOG files
+  * [MAK] Commit for release
+  * Contributors: Vincenzo Petrone
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Wed, 02 Apr 2025 22:00:00 -0000
+
+
