@@ -1,0 +1,58 @@
+ros-jazzy-kdl-inverse-dynamics-solver (2.0.1-1noble) noble; urgency=high
+
+  * Merge branch 'main' into jazzy
+  * Merge branch 'jazzy' of github.com:unisa-acg/inverse-dynamics-solver into jazzy
+  * Merge pull request #13 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/13> from unisa-acg/bugfix/empty_tip_root
+    bugfix/empty_tip_root
+  * [REF] Use param_namespace instead of ns in warning/error messages to print the namespace without a trailing dot
+    - [DOC] Fix Doxygen and inline documentation to comply to the last implementation and fix typos
+  * [REF] Manages missing/empty root/tip parameters with different logics
+    - [TST] Add related tests
+  * [REF] Reorder dependencies alphabetically
+  * Merge branch 'main' into bugfix/empty_tip_root
+  * [FIX] Handle empty root and tip parameters
+    - [ADD] With empty root, defaults to chain root
+    - [ADD] With empty tip, raises an exception
+    - [TST] Add two test fixtures to test the two scenarios above
+  * 2.0.0
+  * [MAK] Update changelog
+  * [DOC] Update links to match Jazzy distro
+  * Contributors: Enrico Ferrentino, Vincenzo Petrone
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Thu, 08 Jan 2026 23:00:00 -0000
+
+ros-jazzy-kdl-inverse-dynamics-solver (2.0.0-1noble) noble; urgency=high
+
+  * [DOC] Update links to match Jazzy distro
+  * [REF] Remove Franka's demos because Franka's description is not available in Jazzy
+    - [DOC] Update documentation accordingly
+  * Contributors: Enrico Ferrentino, Vincenzo Petrone
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Mon, 15 Sep 2025 22:00:00 -0000
+
+ros-jazzy-kdl-inverse-dynamics-solver (1.0.1-1noble) noble; urgency=high
+
+
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Thu, 24 Jul 2025 22:00:00 -0000
+
+ros-jazzy-kdl-inverse-dynamics-solver (1.0.0-1noble) noble; urgency=high
+
+  * [REF] Rename .h files to .hpp files
+  * Merge pull request #2 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/2> from unisa-acg/humble
+    Set repo URL, rename test launch files, document CO reproducibility
+  * [REF] Rename launch file to change its extension and folder
+  * [MAK] Add repo URL
+  * Contributors: Enrico Ferrentino, Vincenzo Petrone
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Sat, 12 Apr 2025 22:00:00 -0000
+
+ros-jazzy-kdl-inverse-dynamics-solver (0.1.1-1noble) noble; urgency=high
+
+  * [MAK] Create CHANGELOG files
+  * [MAK] Commit for release
+  * Contributors: Vincenzo Petrone
+
+ -- Enrico Ferrentino <eferrentino@unisa.it>  Wed, 02 Apr 2025 22:00:00 -0000
+
+
