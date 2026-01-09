@@ -1,0 +1,12 @@
+Source: ros-jazzy-inverse-dynamics-solver
+Section: misc
+Priority: optional
+Maintainer: Enrico Ferrentino <eferrentino@unisa.it>
+Build-Depends: debhelper (>= 9.0.0), libeigen3-dev, ros-jazzy-ament-cmake, ros-jazzy-pluginlib, ros-jazzy-rclcpp, ros-jazzy-rosbag2-cpp, ros-jazzy-rosbag2-storage, ros-jazzy-rosbag2-storage-default-plugins, ros-jazzy-sensor-msgs, ros-jazzy-urdf, ros-jazzy-ros-workspace
+Homepage: https://github.com/unisa-acg/inverse-dynamics-solver.git
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-inverse-dynamics-solver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libeigen3-dev, python3-matplotlib, python3-numpy, python3-tabulate, ros-jazzy-pluginlib, ros-jazzy-rclcpp, ros-jazzy-rosbag2-cpp, ros-jazzy-rosbag2-storage, ros-jazzy-rosbag2-storage-default-plugins, ros-jazzy-sensor-msgs, ros-jazzy-urdf, ros-jazzy-ros-workspace
+Description: A library implementing an inverse dynamics solver for serial manipulators.
