@@ -2,6 +2,14 @@
 Changelog for package franka_inria_inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.3 (2026-01-09)
+------------------
+* Merge branch 'main' into humble
+* Merge branch 'main' into bugfix/empty_tip_root
+* 1.0.2
+* [MAK] Update changelogs
+* Contributors: Vincenzo Petrone
+
 1.0.2 (2025-09-16)
 ------------------
 
