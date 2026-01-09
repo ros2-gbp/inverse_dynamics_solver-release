@@ -1,109 +1,42 @@
-# ur10_inverse_dynamics_solver
+# Inverse dynamics solver
 
-## Contents
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-red.svg?style=plastic)](https://opensource.org/licenses/BSD-3-Clause)
+[![Build Status](https://build.ros2.org/buildStatus/icon?job=Hdev__inverse_dynamics_solver__ubuntu_jammy_amd64&style=plastic)](https://build.ros2.org/job/Hdev__inverse_dynamics_solver__ubuntu_jammy_amd64/)
+[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
 
-This dynamics solver for the real UR10 robot is based on a model identified at current level by the following paper:
+This is the accompanying code of the paper
 
-> V. Petrone, E. Ferrentino and P. Chiacchio, "The Dynamic Model of the UR10 Robot and Its ROS2 Integration," in IEEE Transactions on Industrial Informatics, doi: 10.1109/TII.2025.3534415.
+> V. Petrone, E. Ferrentino, P. Chiacchio, "A ROS2-based software library for inverse dynamics computation". Under peer-review.
 
-The library [InverseDynamicsSolverUR10](./include/ur10_inverse_dynamics_solver/ur10_inverse_dynamics_solver.hpp) depends on the following files, automatically generated with MATLAB:
+This repository provides a library to solve the inverse dynamics problem for serial manipulators, i.e., it returns torques or dynamic matrices given input joint positions, velocities and accelerations.
 
-* [getCoriolisCurrents](./include/ur10_inverse_dynamics_solver/getCoriolisCurrents.hpp): given the 6X1 vector of positions and the 6X1 vector of velocities, both in joint space, it computes the 6x1 vector of currents related to Coriolis effects, expressed in `A`;
-* [getCurrents](./include/ur10_inverse_dynamics_solver/getCurrents.hpp): given the 6X1 vector of positions, the 6X1 vector of velocities and the 6X1 vector of accelerations, all in joint space, it computes the 6x1 vector of currents without the friction effect, expressed in `A`.
-* [getGravityCurrents](./include/ur10_inverse_dynamics_solver/getGravityCurrents.hpp): given the 6x1 vector of positions in joint space, it computes the 6x1 vector of currents due to gravity, expressed in `A`;
-* [getInertiaCurrents](./include/ur10_inverse_dynamics_solver/getInertiaCurrents.hpp): given the 6x1 vector of positions in joint space, it computes the 6x6 inertia matrix, expressed in `A*s^2`;
+The library is implemented in the [`inverse_dynamics_solver` package](./inverse_dynamics_solver/README.md).
+The library is inherited by three concrete classes, i.e.,
 
-The dynamics solver implements the [inverse_dynamics_solver::InverseDynamicsSolver](../inverse_dynamics_solver/README.md) class.
-Since methods that output torques are expected by the parent, this plugin uses the previously discussed current-based methods, along with the motor gains, to implement the parent class' methods.
+- A KDL-based solver for simulated robots, based on their robot description defined via Unified Robot Description Format (URDF)
+    - You can find it in the [`kdl_inverse_dynamics_solver` package](./kdl_inverse_dynamics_solver/README.md)
+- A solver for the real UR10 robot
+    - You can find it in the [`ur10_inverse_dynamics_solver` package](./ur10_inverse_dynamics_solver/README.md)
+- A solver for the real Franka Emika Robot (FER, aka Panda)
+    - You can find it in the [`franka_inria_inverse_dynamics_solver` package](./franka_inria_inverse_dynamics_solver/README.md)
 
-## How to build
+## Dependencies
 
-To build this package, run the following from the root of your colcon workspace:
+This code requires the installation of [ROS2](https://github.com/ros2).
 
-```bash
-colcon build --packages-up-to ur10_inverse_dynamics_solver
-source install/setup.bash
-```
+### System dependencies
 
-## Demo
-
-You can evaluate the solver using the [demo](../inverse_dynamics_solver/demo/evaluate_solver.cpp), whose configuration for the UR10 robot is provided though a [launch file](./launch/evaluate_solver_ur10.launch.py).
-The demo reads a bag file containing a sequence of `sensor_msgs/msg/JointState` messages and, for each state, computes the corresponding torques according to the `InverseDynamicsSolverUR10` solver, which are saved in another bag file.
-
-### Run the demo
-
-To launch the UR10 demo, run the following:
+To install the packages needed by this repo as system-wide dependencies, run the following command from the repository's root folder:
 
 ```bash
-ros2 launch ur10_inverse_dynamics_solver evaluate_solver_ur10.launch.py
+rosdep install --from-paths . -i
 ```
 
-By default, the demo reads the [`ur10_exciting_trajectory.db3`](./bagfiles/ur10_exciting_trajectory.db3) bag file, and produces the output under the `ur10_exciting_trajectory_real_torques` folder (created under the current working directory), with the computed torques written on the `/torques` topic.
-You can change this configuration with
+## Reproducible results
 
-```bash
-ros2 launch ur10_inverse_dynamics_solver evaluate_solver_ur10.launch.py input_bag:=<my_bag_file> output_bag:=<my_output_folder> topic:=<my_output_topic>
-```
+[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
 
-### Visualize the results
+Our results are reproducible via the demos provided in the packages above, or by running the CodeOcean capsule: the latter option does not require installing any dependency on your computer.
+The capsule is reachable at [https://doi.org/10.24433/CO.2265930.v1](https://doi.org/10.24433/CO.2265930.v1).
 
-Please refer to [the parent class documentation](../inverse_dynamics_solver/README.md#visualize-the-results) to visualize the results, i.e. the evaluation of joint torque signals on `input_bag`, stored in `output_bag`.
-
-## How to test
-
-The test consists in validating the solver against a trajectory, on which reference joint positions, velocities and accelerations are stored, and ground-truth joint efforts are specified.
-The ground truth is computed with MATLAB, by using an estimated model in regressive form.
-The test checks that this library computes the same values as the ground truth.
-
-To build and execute the test, run the following:
-
-```bash
-colcon test --packages-select ur10_inverse_dynamics_solver
-```
-
-To see the results, run the following:
-
-```bash
-colcon test-result --all --verbose
-```
-
-The expected output is the following:
-
-```text
-build/ur10_inverse_dynamics_solver/Testing/20240510-0742/Test.xml: 1 test, 0 errors, 0 failures, 0 skipped
-build/ur10_inverse_dynamics_solver/test_results/ur10_inverse_dynamics_solver/launch_test_ur10_inverse_dynamics_solver.launch.py.xunit.xml: 2 tests, 0 errors, 0 failures, 0 skipped
-
-Summary: 3 tests, 0 errors, 0 failures, 0 skipped
-```
-
-### Optional analysis
-
-If you wish to see the INFO messages printed on console during the test, run the following:
-
-```bash
-colcon test --packages-select ur10_inverse_dynamics_solver --event-handlers console_cohesion+
-```
-
-The expected output should contain the following line:
-
-```text
-100% tests passed, 0 tests failed out of 1
-```
-
-## Citation
-
-If you find this work useful, please cite it as
-
-```bibtex
-@article{Petrone_2025,
-    title={The Dynamic Model of the UR10 Robot and Its ROS2 Integration},
-    ISSN={1941-0050},
-    url={http://dx.doi.org/10.1109/tii.2025.3534415},
-    DOI={10.1109/tii.2025.3534415},
-    journal={IEEE Transactions on Industrial Informatics},
-    publisher={Institute of Electrical and Electronics Engineers (IEEE)},
-    author={Petrone, Vincenzo and Ferrentino, Enrico and Chiacchio, Pasquale},
-    year={2025},
-    pages={1–11}
-}
-```
+&copy; *2025 Automatic Control Group (DIEM, University of Salerno)*
