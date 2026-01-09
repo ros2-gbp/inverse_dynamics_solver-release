@@ -2,23 +2,17 @@
 Changelog for package ur10_inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-6.0.1 (2025-12-18)
+2.0.1 (2026-01-09)
 ------------------
-* Merge pull request `#11 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/11>`_ from unisa-acg/feature/update_dependencies_exporting
-  feature/update_dependencies_exporting
-* [REF] Remove eigen dependency from package.xml
-* [REF] Reduce direct dependencies when possible
-  - [FIX] Add missing KDL dependencies
-  - [DOC] Change citation in UR10 solver
-* [FIX] Correct eigen name in package description
-* Merge branch 'main' into feature/update_dependencies_exporting
-* [REF] Solve compilation warnings about deprecation of "ament_target_dependencies" in favor of "target_link_libraries"
-  - [REF] Add missing dependencies
-* Merge pull request `#10 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/10>`_ from unisa-acg/feature/franka_description_removal
-  feature/franka_description_removal
+* Merge branch 'jazzy' of github.com:unisa-acg/inverse-dynamics-solver into jazzy
+* Merge branch 'main' into bugfix/empty_tip_root
+* 2.0.0
+* [MAK] Update changelog
+* Contributors: Vincenzo Petrone
+
+2.0.0 (2025-09-16)
+------------------
 * [DOC] Remove superfluous instructions in documentation about ros bag files conversion
-* Merge pull request `#5 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/5>`_ from unisa-acg/humble
-  1.0.1
 * Contributors: Enrico Ferrentino, Vincenzo Petrone
 
 1.0.1 (2025-07-25)

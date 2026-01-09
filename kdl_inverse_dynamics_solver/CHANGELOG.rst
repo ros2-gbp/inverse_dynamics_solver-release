@@ -2,25 +2,33 @@
 Changelog for package kdl_inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-6.0.1 (2025-12-18)
+2.0.1 (2026-01-09)
 ------------------
-* Merge pull request `#11 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/11>`_ from unisa-acg/feature/update_dependencies_exporting
-  feature/update_dependencies_exporting
-* [REF] Reduce direct dependencies when possible
-  - [FIX] Add missing KDL dependencies
-  - [DOC] Change citation in UR10 solver
-* [FIX] Correct eigen name in package description
-* Merge branch 'main' into feature/update_dependencies_exporting
-* [REF] Solve compilation warnings about deprecation of "ament_target_dependencies" in favor of "target_link_libraries"
-  - [REF] Add missing dependencies
-* Merge pull request `#10 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/10>`_ from unisa-acg/feature/franka_description_removal
-  feature/franka_description_removal
-* [MAK] Update CMakeLists and package.xml to include new dependencies and refactor inverse dynamic solver target export
+* Merge branch 'main' into jazzy
+* Merge branch 'jazzy' of github.com:unisa-acg/inverse-dynamics-solver into jazzy
+* Merge pull request `#13 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/13>`_ from unisa-acg/bugfix/empty_tip_root
+  bugfix/empty_tip_root
+* [REF] Use param_namespace instead of ns in warning/error messages to print the namespace without a trailing dot
+  - [DOC] Fix Doxygen and inline documentation to comply to the last implementation and fix typos
+* [REF] Manages missing/empty root/tip parameters with different logics
+  - [TST] Add related tests
+* [REF] Reorder dependencies alphabetically
+* Merge branch 'main' into bugfix/empty_tip_root
+* [FIX] Handle empty root and tip parameters
+  - [ADD] With empty root, defaults to chain root
+  - [ADD] With empty tip, raises an exception
+  - [TST] Add two test fixtures to test the two scenarios above
+* 2.0.0
+* [MAK] Update changelog
+* [DOC] Update links to match Jazzy distro
+* Contributors: Enrico Ferrentino, Vincenzo Petrone
+
+2.0.0 (2025-09-16)
+------------------
+* [DOC] Update links to match Jazzy distro
 * [REF] Remove Franka's demos because Franka's description is not available in Jazzy
   - [DOC] Update documentation accordingly
-* Merge pull request `#5 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/5>`_ from unisa-acg/humble
-  1.0.1
-* Contributors: Davide Risi, Enrico Ferrentino, Vincenzo Petrone
+* Contributors: Enrico Ferrentino, Vincenzo Petrone
 
 1.0.1 (2025-07-25)
 ------------------
