@@ -2,19 +2,16 @@
 Changelog for package franka_inria_inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.0.1 (2026-01-09)
+1.0.3 (2026-01-09)
 ------------------
-* Merge branch 'jazzy' of github.com:unisa-acg/inverse-dynamics-solver into jazzy
+* Merge branch 'main' into humble
 * Merge branch 'main' into bugfix/empty_tip_root
-* 2.0.0
-* [MAK] Update changelog
+* 1.0.2
+* [MAK] Update changelogs
 * Contributors: Vincenzo Petrone
 
-2.0.0 (2025-09-16)
+1.0.2 (2025-09-16)
 ------------------
-* [REF] Remove Franka's demos because Franka's description is not available in Jazzy
-  - [DOC] Update documentation accordingly
-* Contributors: Enrico Ferrentino, Vincenzo Petrone
 
 1.0.1 (2025-07-25)
 ------------------

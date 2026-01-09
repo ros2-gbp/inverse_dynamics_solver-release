@@ -2,18 +2,19 @@
 Changelog for package ur10_inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.0.1 (2026-01-09)
+1.0.3 (2026-01-09)
 ------------------
-* Merge branch 'jazzy' of github.com:unisa-acg/inverse-dynamics-solver into jazzy
+* Merge branch 'main' into humble
 * Merge branch 'main' into bugfix/empty_tip_root
-* 2.0.0
-* [MAK] Update changelog
+* 1.0.2
+* [MAK] Update changelogs
+* [DOC] Remove superfluous instructions in documentation about ros bag files conversion
 * Contributors: Vincenzo Petrone
 
-2.0.0 (2025-09-16)
+1.0.2 (2025-09-16)
 ------------------
 * [DOC] Remove superfluous instructions in documentation about ros bag files conversion
-* Contributors: Enrico Ferrentino, Vincenzo Petrone
+* Contributors: Vincenzo Petrone
 
 1.0.1 (2025-07-25)
 ------------------
