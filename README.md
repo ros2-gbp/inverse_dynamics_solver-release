@@ -1,3 +1,30 @@
+## inverse_dynamics_solver (jazzy) - 2.0.2-1
+
+The packages in the `inverse_dynamics_solver` repository were released into the `jazzy` distro by running `/usr/bin/bloom-release --rosdistro jazzy inverse_dynamics_solver` on `Sat, 10 Jan 2026 11:34:47 -0000`
+
+These packages were released:
+- `franka_inria_inverse_dynamics_solver`
+- `inverse_dynamics_solver`
+- `kdl_inverse_dynamics_solver`
+- `ur10_inverse_dynamics_solver`
+
+Version of package(s) in repository `inverse_dynamics_solver`:
+
+- upstream repository: https://github.com/unisa-acg/inverse-dynamics-solver.git
+- release repository: https://github.com/ros2-gbp/inverse_dynamics_solver-release.git
+- rosdistro version: `2.0.0-1`
+- old version: `2.0.1-1`
+- new version: `2.0.2-1`
+
+Versions of tools used:
+
+- bloom version: `0.13.0`
+- catkin_pkg version: `1.1.0`
+- rosdep version: `0.26.0`
+- rosdistro version: `1.0.1`
+- vcstools version: `0.1.42`
+
+
 ## inverse_dynamics_solver (humble) - 1.0.3-1
 
 The packages in the `inverse_dynamics_solver` repository were released into the `humble` distro by running `/usr/bin/bloom-release --rosdistro humble inverse_dynamics_solver` on `Fri, 09 Jan 2026 21:46:31 -0000`
