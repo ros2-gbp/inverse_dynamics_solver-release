@@ -1,0 +1,12 @@
+Source: ros-jazzy-kdl-inverse-dynamics-solver
+Section: misc
+Priority: optional
+Maintainer: Enrico Ferrentino <eferrentino@unisa.it>
+Build-Depends: debhelper (>= 9.0.0), liborocos-kdl-dev, ros-jazzy-ament-cmake, ros-jazzy-ament-cmake-gtest <!nocheck>, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>, ros-jazzy-inverse-dynamics-solver, ros-jazzy-kdl-parser, ros-jazzy-pluginlib, ros-jazzy-rclcpp, ros-jazzy-rclcpp <!nocheck>, ros-jazzy-ros-testing <!nocheck>, ros-jazzy-ros-workspace
+Homepage: https://github.com/unisa-acg/inverse-dynamics-solver.git
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-kdl-inverse-dynamics-solver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, liborocos-kdl1.5, ros-jazzy-inverse-dynamics-solver, ros-jazzy-kdl-parser, ros-jazzy-pluginlib, ros-jazzy-rclcpp, ros-jazzy-ur-description, ros-jazzy-ros-workspace
+Description: A KDL-based library implementing an inverse dynamics solver for simulated robots.
