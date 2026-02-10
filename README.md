@@ -1,42 +1,76 @@
-# Inverse dynamics solver
+# franka_inria_inverse_dynamics_solver
 
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-red.svg?style=plastic)](https://opensource.org/licenses/BSD-3-Clause)
-[![Build Status](https://build.ros2.org/buildStatus/icon?job=Jdev__inverse_dynamics_solver__ubuntu_noble_amd64&style=plastic)](https://build.ros2.org/view/Jdev/job/Jdev__inverse_dynamics_solver__ubuntu_noble_amd64/)
-[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
+## Contents
 
-This is the accompanying code of the paper
+This dynamics solver for the real Franka Emika (FER) robot is based on a model identified by the following paper:
+> C. Gaz, M. Cognetti, A. Oliva, P. Robuffo Giordano, and A. De Luca, "Dynamic Identification of the Franka Emika Panda Robot With Retrieval of Feasible Parameters Using Penalty-Based Optimization," IEEE Robotics and Automation Letters, vol. 4, no. 4, pp. 4147-4154, Oct. 2019, doi: 10.1109/lra.2019.2931248.
 
-> V. Petrone, E. Ferrentino, P. Chiacchio, "A ROS2-based software library for inverse dynamics computation". Under peer-review.
+The group at INRIA provided the library for the computation of the dynamic parameters, composed by four header files (one per function) and several source files with different implementations.
+On top of these, the library [InverseDynamicsSolverFrankaInria](./include/franka_inria_inverse_dynamics_solver/franka_inria_inverse_dynamics_solver.hpp) has been developed, to include the following files:
 
-This repository provides a library to solve the inverse dynamics problem for serial manipulators, i.e., it returns torques or dynamic matrices given input joint positions, velocities and accelerations.
+* [`get_CoriolisMatrix.hpp`](./include/franka_inria_inverse_dynamics_solver/get_CoriolisMatrix.hpp): given the 7X1 vector of positions and the 7X1 vector of velocities, both in joint space, it computes the 7x7 matrix of torques related to centrifugal and Coriolis effects;
+    * [`get_CoriolisMatrix_old.cpp`](./src/get_CoriolisMatrix_old.cpp): computes the Coriolis matrix by using temporary variables to store intermediate results of the computation;
+        * This function is not actually needed by [the library implementation](./src/franka_inria_inverse_dynamics_solver.cpp), and is kept for legacy purposes only;
+    * [`get_CoriolisMatrix.cpp`](./src/get_CoriolisMatrix.cpp): computes the Coriolis matrix directly, without using intermediate variables;
+* [`get_FrictionTorque.hpp`](./include/franka_inria_inverse_dynamics_solver/get_FrictionTorque.hpp): given the 7X1 vector of velocities, it computes the 7x1 vector of torques due to friction;
+* [`get_GravityVector.hpp`](./include/franka_inria_inverse_dynamics_solver/get_GravityVector.hpp): given the 7x1 vector of positions in joint space, it computes the 7x1 vector of torques due to gravity;
+* [`get_MassMatrix.hpp`](./include/franka_inria_inverse_dynamics_solver/get_MassMatrix.hpp): given the 7x1 vector of positions in joint space, it computes the 7x7 inertia matrix.
+    * [`get_MassMatrix.cpp`](./src/get_MassMatrix.cpp): computes the inertia matrix by using temporary variables to store intermediate results of the computation;
+        * This function is not actually needed by [the library implementation](./src/franka_inria_inverse_dynamics_solver.cpp), and is kept for legacy purposes only;
+    * [`get_MassMatrix_parziale.cpp`](./src/get_MassMatrix_parziale.cpp): computes the inertia matrix directly, without using intermediate variables.
 
-The library is implemented in the [`inverse_dynamics_solver` package](./inverse_dynamics_solver/README.md).
-The library is inherited by three concrete classes, i.e.,
+The dynamics solver implements the [inverse_dynamics_solver::InverseDynamicsSolver](../inverse_dynamics_solver/README.md) class.
 
-- A KDL-based solver for simulated robots, based on their robot description defined via Unified Robot Description Format (URDF)
-    - You can find it in the [`kdl_inverse_dynamics_solver` package](./kdl_inverse_dynamics_solver/README.md)
-- A solver for the real UR10 robot
-    - You can find it in the [`ur10_inverse_dynamics_solver` package](./ur10_inverse_dynamics_solver/README.md)
-- A solver for the real Franka Emika Robot (FER, aka Panda)
-    - You can find it in the [`franka_inria_inverse_dynamics_solver` package](./franka_inria_inverse_dynamics_solver/README.md)
+## How to build
 
-## Dependencies
-
-This code requires the installation of [ROS2](https://github.com/ros2).
-
-### System dependencies
-
-To install the packages needed by this repo as system-wide dependencies, run the following command from the repository's root folder:
+To build this package, run the following from the root of your colcon workspace:
 
 ```bash
-rosdep install --from-paths . -i
+colcon build --packages-up-to franka_inria_inverse_dynamics_solver
+source install/setup.bash
 ```
 
-## Reproducible results
+## Demo
 
-[![Static Badge](https://img.shields.io/badge/Open_in-Code_Ocean-blue?style=plastic)](https://doi.org/10.24433/CO.2265930.v1)
+You can evaluate the solver using the [demo](../inverse_dynamics_solver/demo/evaluate_solver.cpp), currently configured in a [launch file](./launch/evaluate_solver_franka.launch.py).
+The demo reads a bag file containing a sequence of `sensor_msgs/msg/JointState` messages and, for each state, computes the corresponding torques according to the `InverseDynamicsSolverFrankaInria` solver, which are saved in another bag file.
 
-Our results are reproducible via the demos provided in the packages above, or by running the CodeOcean capsule: the latter option does not require installing any dependency on your computer.
-The capsule is reachable at [https://doi.org/10.24433/CO.2265930.v1](https://doi.org/10.24433/CO.2265930.v1).
+### Run the demo
 
-&copy; *2025 Automatic Control Group (DIEM, University of Salerno)*
+To launch the demo, run the following:
+
+```bash
+ros2 launch franka_inria_inverse_dynamics_solver evaluate_solver_franka.launch.py
+```
+
+By default, the demo reads the [`panda_exciting_trajectory.db3`](./bagfiles/panda_exciting_trajectory.db3) bag file, and produces the output under the `panda_exciting_trajectory_real_torques` folder (created under the current working directory), with the computed torques written to the `/torques` topic.
+You can change this configuration with
+
+```bash
+ros2 launch franka_inria_inverse_dynamics_solver evaluate_solver_franka.launch.py input_bag:=<my_bag_file> output_bag:=<my_output_folder> topic:=<my_output_topic>
+```
+
+### Visualize the results
+
+Please refer to [the parent class documentation](../inverse_dynamics_solver/README.md#visualize-the-results) to visualize the results, i.e. the evaluation of joint torque signals on `input_bag`, stored in `output_bag`.
+
+## Citation
+
+If you find this work useful, please cite it as
+
+```bibtex
+@article{Gaz_2019,
+    title={Dynamic Identification of the Franka Emika Panda Robot With Retrieval of Feasible Parameters Using Penalty-Based Optimization},
+    volume={4},
+    ISSN={2377-3774},
+    url={http://dx.doi.org/10.1109/lra.2019.2931248},
+    DOI={10.1109/lra.2019.2931248},
+    number={4},
+    journal={IEEE Robotics and Automation Letters},
+    publisher={Institute of Electrical and Electronics Engineers (IEEE)},
+    author={Gaz, Claudio and Cognetti, Marco and Oliva, Alexander and Robuffo Giordano, Paolo and De Luca, Alessandro},
+    year={2019},
+    month=oct,
+    pages={4147–4154}
+}
+```
