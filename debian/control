@@ -1,0 +1,12 @@
+Source: ros-humble-ur10-inverse-dynamics-solver
+Section: misc
+Priority: optional
+Maintainer: Enrico Ferrentino <eferrentino@unisa.it>
+Build-Depends: debhelper (>= 9.0.0), ros-humble-ament-cmake, ros-humble-ament-cmake-gtest <!nocheck>, ros-humble-ament-lint-auto <!nocheck>, ros-humble-ament-lint-common <!nocheck>, ros-humble-inverse-dynamics-solver, ros-humble-pluginlib, ros-humble-rclcpp <!nocheck>, ros-humble-ros-testing <!nocheck>, ros-humble-rosbag2-cpp <!nocheck>, ros-humble-rosbag2-storage <!nocheck>, ros-humble-rosbag2-storage-default-plugins <!nocheck>, ros-humble-trajectory-msgs <!nocheck>, ros-humble-ros-workspace
+Homepage: https://github.com/unisa-acg/inverse-dynamics-solver.git
+Standards-Version: 3.9.2
+
+Package: ros-humble-ur10-inverse-dynamics-solver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-humble-inverse-dynamics-solver, ros-humble-pluginlib, ros-humble-ur-description, ros-humble-ros-workspace
+Description: A C++ library implementing the inverse dynamics solver for the UR10 real robot.
