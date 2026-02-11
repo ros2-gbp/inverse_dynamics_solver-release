@@ -2,33 +2,26 @@
 Changelog for package inverse_dynamics_solver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.0.4 (2026-02-10)
+6.0.1 (2025-12-18)
 ------------------
-* Merge branch 'main' into humble
-* Merge pull request `#15 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/15>`_ from unisa-acg/bugfix/realtime_safeness
-  bugfix/realtime_safeness
-* [MAK] Add trailing underscore to private member attributes
-* [FIX] Deallocate variables
-  - [REF] Use new instead of malloc
-  - [ADD] Initialize pointers
-  - [ADD] Measure performance in terms of computation time
-* Merge branch 'main' into bugfix/realtime_safeness
-* Contributors: Enrico Ferrentino, Vincenzo Petrone
-
-1.0.3 (2026-01-09)
-------------------
-* [FIX] Correct header after backporting
-* Merge branch 'main' into humble
-* Merge branch 'main' into bugfix/empty_tip_root
-* 1.0.2
-* [MAK] Update changelogs
+* Merge pull request `#11 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/11>`_ from unisa-acg/feature/update_dependencies_exporting
+  feature/update_dependencies_exporting
+* [REF] Avoid using variable for consistency
+* [REF] Reduce direct dependencies when possible
+  - [FIX] Add missing KDL dependencies
+  - [DOC] Change citation in UR10 solver
+* Merge branch 'main' into feature/update_dependencies_exporting
+* [REF] Solve compilation warnings about deprecation of "ament_target_dependencies" in favor of "target_link_libraries"
+  - [REF] Add missing dependencies
+* Merge pull request `#10 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/10>`_ from unisa-acg/feature/franka_description_removal
+  feature/franka_description_removal
+* [MAK] Update CMakeLists and package.xml to include new dependencies and refactor inverse dynamic solver target export
+* [REF] Remove Franka's demos because Franka's description is not available in Jazzy
+  - [DOC] Update documentation accordingly
 * [REF] Make robot description empty by default
-* Contributors: Vincenzo Petrone
-
-1.0.2 (2025-09-16)
-------------------
-* [REF] Make robot description empty by default
-* Contributors: Vincenzo Petrone
+* Merge pull request `#5 <https://github.com/unisa-acg/inverse-dynamics-solver/issues/5>`_ from unisa-acg/humble
+  1.0.1
+* Contributors: Davide Risi, Enrico Ferrentino, Vincenzo Petrone
 
 1.0.1 (2025-07-25)
 ------------------
