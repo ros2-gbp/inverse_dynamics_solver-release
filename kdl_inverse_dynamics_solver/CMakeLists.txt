@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.16)
 project(kdl_inverse_dynamics_solver)
 
 if(CMAKE_COMPILER_IS_GNUCXX
@@ -43,9 +43,9 @@ target_include_directories(
 )
 target_link_libraries(
   kdl_inverse_dynamics_solver
-  PUBLIC rclcpp::rclcpp
-         kdl_parser::kdl_parser
+  PUBLIC kdl_parser::kdl_parser
          pluginlib::pluginlib
+         rclcpp::rclcpp
          inverse_dynamics_solver::inverse_dynamics_solver
 )
 

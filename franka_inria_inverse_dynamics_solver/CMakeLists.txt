@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.16)
 project(franka_inria_inverse_dynamics_solver)
 
 if(CMAKE_COMPILER_IS_GNUCXX
@@ -12,6 +12,12 @@ if(CMAKE_COMPILER_IS_GNUCXX
     -Wpedantic
   )
 endif()
+
+# Code optimization flags are available here
+# https://clang.llvm.org/docs/CommandGuide/clang.html#code-generation-options
+set(CMAKE_CXX_FLAGS
+    "-O3"
+)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
     pluginlib inverse_dynamics_solver
