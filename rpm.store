@@ -1,1 +1,1 @@
-{"base": "ebacd08ad7df", "parent": "release/rolling/franka_inria_inverse_dynamics_solver/6.0.1-3", "previous": "2e68596683ee", "trim": "", "trimbase": ""}
+{"base": "7c5264e", "parent": "release/rolling/franka_inria_inverse_dynamics_solver", "previous": "80e4156", "trim": "", "trimbase": ""}
