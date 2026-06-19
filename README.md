@@ -1,3 +1,30 @@
+## inverse_dynamics_solver (rolling) - 6.0.1-4
+
+The packages in the `inverse_dynamics_solver` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling inverse_dynamics_solver` on `Fri, 19 Jun 2026 10:19:28 -0000`
+
+These packages were released:
+- `franka_inria_inverse_dynamics_solver`
+- `inverse_dynamics_solver`
+- `kdl_inverse_dynamics_solver`
+- `ur10_inverse_dynamics_solver`
+
+Version of package(s) in repository `inverse_dynamics_solver`:
+
+- upstream repository: https://github.com/unisa-acg/inverse-dynamics-solver.git
+- release repository: https://github.com/ros2-gbp/inverse_dynamics_solver-release.git
+- rosdistro version: `null`
+- old version: `6.0.1-3`
+- new version: `6.0.1-4`
+
+Versions of tools used:
+
+- bloom version: `0.14.3`
+- catkin_pkg version: `1.1.0`
+- rosdep version: `0.26.0`
+- rosdistro version: `1.0.1`
+- vcstools version: `0.1.42`
+
+
 ## inverse_dynamics_solver (rolling) - 6.0.1-3
 
 The packages in the `inverse_dynamics_solver` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling inverse_dynamics_solver` on `Wed, 11 Feb 2026 15:12:52 -0000`
